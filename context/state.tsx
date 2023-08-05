@@ -2,8 +2,8 @@ import React from "react";
 import { createContext, useContext } from "react";
 
 interface IUser {
-  id: number;
-  userName: string;
+  id: number | null;
+  userName: string | null;
 }
 interface IState {
   user: IUser | null;

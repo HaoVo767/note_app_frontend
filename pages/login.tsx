@@ -25,6 +25,8 @@ export default function LoginPage() {
   };
   React.useEffect(() => {
     localStorage.removeItem("user");
+    onChangeState({ user: null });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleSubmit = () => {
     if (isSignIn) {

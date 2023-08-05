@@ -5,6 +5,7 @@ export default function HomePage() {
   const router = useRouter();
   useEffect(() => {
     router.push("/login");
-  }, [router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return;
 }
