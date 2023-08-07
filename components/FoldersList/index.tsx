@@ -1,40 +1,33 @@
 import React from "react";
-import { Box, Card, CardContent, Grid, List, Stack, Typography } from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { IFolder } from "../interface";
 
-function ForlersList({ foldersList }: { foldersList: any[] }) {
+function ForlersList({ foldersList }: { foldersList: IFolder[] | undefined }) {
+  const router = useRouter();
+  const fId = router.query.folderId;
   return (
     <Box
       sx={{
         textAlign: "left",
         height: "100% ",
         overflowY: "auto",
-        scrollbarWidth: "thin",
-        "&::-webkit-scrollbar": {
-          width: "0.1em",
-        },
-        "&::-webkit-scrollbar-track": {
-          background: "#f1f1f1",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "#888",
-        },
-        "&::-webkit-scrollbar-thumb:hover": {
-          background: "#555",
-        },
       }}
     >
-      {foldersList.map(({ id, name }) => (
-        <Box sx={{ mt: 2 }} key={id}>
-          <Link href={`/folder/${id}`} style={{ textDecoration: "none" }}>
-            <Card>
-              <CardContent sx={{ overflowX: "hidden" }}>
-                <Typography sx={{ ml: 3 }}>{name}</Typography>
-              </CardContent>
-            </Card>
-          </Link>
-        </Box>
-      ))}
+      {foldersList
+        ? foldersList.map(({ folderId, folderName }) => (
+            <Box sx={{ mt: "1px" }} key={folderId}>
+              <Link href={`/folder/${folderId}`} style={{ textDecoration: "none" }}>
+                <Card sx={{ backgroundColor: folderId == fId ? "#e3f2fd" : null }}>
+                  <CardContent sx={{ overflowX: "hidden" }}>
+                    <Typography sx={{ ml: 3, fontWeight: "600" }}>{folderName}</Typography>
+                  </CardContent>
+                </Card>
+              </Link>
+            </Box>
+          ))
+        : null}
     </Box>
   );
 }

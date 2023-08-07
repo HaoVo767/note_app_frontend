@@ -2,6 +2,8 @@ import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { AppWrapper } from "@/context/state";
+// import "../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "../global/index.css";
 import Axios from "axios";
 import React from "react";
 

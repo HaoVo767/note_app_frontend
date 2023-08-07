@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppContext } from "@/context/state";
-import { Box, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useRouter } from "next/router";
 
 export default function UserMenu() {
@@ -20,9 +21,10 @@ export default function UserMenu() {
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "right", mr: 5 }}>
-        <Typography sx={{ cursor: "pointer", fontSize: 20, mt: 2, mb: 0 }} onClick={handleOpenMenu}>
-          {user?.userName}
-        </Typography>
+        <Stack direction={"row"} sx={{ cursor: "pointer", mt: 2, mb: 0 }} onClick={handleOpenMenu}>
+          <AccountCircleIcon sx={{ mt: "2px", mr: "2px" }} />
+          <Typography sx={{ fontSize: 20 }}>{user?.userName}</Typography>
+        </Stack>
       </Box>
       <Menu id="user-menu" anchorEl={anchorEL} open={open} onClose={handleClose}>
         <MenuItem onClick={handleLogout}>Log out</MenuItem>

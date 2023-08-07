@@ -18,13 +18,5 @@ export default function Home() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return (
-    // <Box sx={{ height: "70vh", width: 700, margin: "auto", mt: 10, boxShadow: "0 0 15px 0 rgb(193 193 193)" }}>
-    //   <Stack direction="column">
-    //     <UserMenu />
-    //     <NoteWarpper />
-    //   </Stack>
-    // </Box>
-    <NoteWarpper />
-  );
+  return <NoteWarpper />;
 }
