@@ -29,6 +29,7 @@ export default function LoginPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleSubmit = () => {
+    console.log("click");
     if (isSignIn) {
       axios({
         method: "POST",
@@ -45,6 +46,7 @@ export default function LoginPage() {
           } else {
             onChangeState({ user: response.data.user });
             localStorage.setItem("user", JSON.stringify(response.data.user));
+            localStorage.setItem("accessToken", response.data.accessToken);
             router.push("/home");
           }
         })

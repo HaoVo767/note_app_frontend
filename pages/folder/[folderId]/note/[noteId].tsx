@@ -4,9 +4,6 @@ import NoteWarpper from "@/components/NoteWrapper";
 
 function NoteId() {
   const router = useRouter();
-  const { noteId, folderId } = router.query;
-  console.log("noteId", noteId);
-  console.log("folderId ", folderId);
   return <NoteWarpper />;
 }
 

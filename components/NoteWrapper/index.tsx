@@ -5,15 +5,13 @@ import UserMenu from "../UserMenu";
 import NoteList from "../NoteList";
 import { useAppContext } from "@/context/state";
 import { IFolder } from "../interface";
-// import { baseURL } from "@/constants/baseURL";
+import { baseURL } from "@/constants/baseURL";
 
 function NoteWarpper() {
   const { user } = useAppContext();
   const [foldersList, setFoldersList] = React.useState<IFolder[]>();
-  // console.log("dotevn ", baseURL as string);
   React.useEffect(() => {
-    const baseURL = "http://localhost/5000";
-    fetch(`http://localhost/5000/getFolders/${user?.id ? user.id.toString() : "3"}`)
+    fetch(`${baseURL}/getFolders/${user?.id ? user.id.toString() : "3"}`)
       .then((response) => response.json())
       .then((data) => setFoldersList(data.result))
       .catch((err) => console.log("err ", err));
