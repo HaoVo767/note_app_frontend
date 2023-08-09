@@ -11,7 +11,7 @@ function ForlersList({ foldersList }: { foldersList: IFolder[] | undefined }) {
     <Box
       sx={{
         textAlign: "left",
-        height: "100% ",
+        height: "60vh",
         overflowY: "auto",
       }}
     >

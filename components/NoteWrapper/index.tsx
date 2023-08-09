@@ -6,17 +6,28 @@ import NoteList from "../NoteList";
 import { useAppContext } from "@/context/state";
 import { IFolder } from "../interface";
 import { baseURL } from "@/constants/baseURL";
+import AddNewPlan from "../NewPlan";
 
 function NoteWarpper() {
-  const { user } = useAppContext();
+  const { addItem, onChangeState } = useAppContext();
   const [foldersList, setFoldersList] = React.useState<IFolder[]>();
   React.useEffect(() => {
-    fetch(`${baseURL}/getFolders/${user?.id ? user.id.toString() : "3"}`)
+    const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
+    fetch(`${baseURL}/getFolders`, {
+      headers: { Authorization: accessToken || " ", Accept: "application/json" },
+    })
       .then((response) => response.json())
-      .then((data) => setFoldersList(data.result))
+      .then((data) => {
+        try {
+          setFoldersList(data.result);
+          onChangeState({ addItem: false });
+        } catch (err) {
+          alert("Phiên đăng nhập hết hạn");
+        }
+      })
       .catch((err) => console.log("err ", err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [addItem]);
 
   return (
     <Box sx={{ height: "70vh", width: 1000, margin: "auto", mt: 10, boxShadow: "0 0 15px 0 rgb(193 193 193)" }}>
@@ -26,9 +37,12 @@ function NoteWarpper() {
           <Grid container>
             <Grid item xs={3}>
               <Stack height={"90%"}>
-                <Typography variant="h6" sx={{ textAlign: "center" }}>
-                  Plan list
-                </Typography>
+                <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
+                  <Typography variant="h6" sx={{ ml: 2 }}>
+                    Plan list
+                  </Typography>
+                  <AddNewPlan />
+                </Stack>
                 <Divider />
                 <ForlersList foldersList={foldersList} />
               </Stack>

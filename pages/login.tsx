@@ -29,7 +29,6 @@ export default function LoginPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleSubmit = () => {
-    console.log("click");
     if (isSignIn) {
       axios({
         method: "POST",

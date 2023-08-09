@@ -15,9 +15,14 @@ function NoteEditor() {
   const router = useRouter();
   const { folderId, noteId } = router.query;
   useEffect(() => {
-    fetch(`${baseURL}/getNote/${folderId}/${noteId}`)
+    const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
+    fetch(`${baseURL}/getNote/${folderId}/${noteId}`, {
+      headers: { Authorization: accessToken || "", Accept: "application/json" },
+    })
       .then((response) => response.json())
-      .then((data) => setNote(data.result[0]))
+      .then((data) => {
+        setNote(data.result[0]);
+      })
       .catch((err) => console.log(err));
   }, [noteId, folderId]);
   const [editorState, setEditorState] = useState<EditorState | undefined>(EditorState.createEmpty());

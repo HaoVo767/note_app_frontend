@@ -9,13 +9,17 @@ import { baseURL } from "@/constants/baseURL";
 function NoteList() {
   const router = useRouter();
   const [notes, setNotes] = React.useState<INote[]>([]);
-
   const { noteId: nId, folderId } = router.query;
 
   React.useEffect(() => {
-    fetch(`${baseURL}/getNote/${folderId}`)
+    const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
+    fetch(`${baseURL}/getNote/${folderId}`, {
+      headers: { Authorization: accessToken || "", Accept: "application/json" },
+    })
       .then((response) => response.json())
-      .then((data) => setNotes(data.result))
+      .then((data) => {
+        setNotes(data.result);
+      })
       .catch((err) => console.log("error ", err));
   }, [folderId]);
 
