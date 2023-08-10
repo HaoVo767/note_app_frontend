@@ -5,9 +5,11 @@ import { useRouter } from "next/router";
 import NoteEditor from "../NoteEditor";
 import { INote } from "../interface";
 import { baseURL } from "@/constants/baseURL";
+import { useAppContext } from "@/context/state";
 
 function NoteList() {
   const router = useRouter();
+  const { addItem, onChangeState } = useAppContext();
   const [notes, setNotes] = React.useState<INote[]>([]);
   const { noteId: nId, folderId } = router.query;
 
@@ -19,9 +21,11 @@ function NoteList() {
       .then((response) => response.json())
       .then((data) => {
         setNotes(data.result);
+        onChangeState({ addItem: false });
       })
       .catch((err) => console.log("error ", err));
-  }, [folderId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [folderId, addItem]);
 
   return (
     <Grid container sx={{ height: "90%" }}>
@@ -33,10 +37,15 @@ function NoteList() {
                   <Card sx={{ backgroundColor: noteId === Number(nId) ? "#e0f2f1" : null, height: 70 }}>
                     <CardContent sx={{ overflowX: "hidden" }}>
                       <div
-                        style={{ fontSize: "14px", fontWeight: "600" }}
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: "600",
+                          height: 30,
+                          overflow: "hidden",
+                        }}
                         dangerouslySetInnerHTML={{ __html: `${noteContent.substring(0, 40)}` || "Empty" }}
                       ></div>
-                      <Typography sx={{ textAlign: "right", fontSize: 14 }}>
+                      <Typography sx={{ textAlign: "right", fontSize: 13 }}>
                         {new Date(createdAt).toLocaleDateString().replaceAll("/", "-")}
                       </Typography>
                     </CardContent>

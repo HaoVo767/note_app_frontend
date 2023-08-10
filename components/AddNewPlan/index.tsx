@@ -11,9 +11,10 @@ import {
 } from "@mui/material";
 import { CreateNewFolderOutlined } from "@mui/icons-material";
 import { useAppContext } from "@/context/state";
+import { baseURL } from "@/constants/baseURL";
 
 const AddNewPlan = () => {
-  const { addItem, onChangeState } = useAppContext();
+  const { onChangeState } = useAppContext();
   const [openDialog, setOpenDialog] = React.useState<boolean>(false);
   const [newFolderName, setNewFolderName] = React.useState<string>("");
   const handleOpenPopup = () => {
@@ -29,7 +30,7 @@ const AddNewPlan = () => {
     if (!!newFolderName) {
       const accessToken = "Bearer " + localStorage.getItem("accessToken");
       const data = { folderName: newFolderName };
-      fetch("http://localhost:5000/addNewFolder", {
+      fetch(`${baseURL}/addNewFolder`, {
         method: "POST",
         headers: { Authorization: accessToken, Accept: "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(data),

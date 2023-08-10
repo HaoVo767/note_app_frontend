@@ -6,11 +6,15 @@ import NoteList from "../NoteList";
 import { useAppContext } from "@/context/state";
 import { IFolder } from "../interface";
 import { baseURL } from "@/constants/baseURL";
-import AddNewPlan from "../NewPlan";
+import AddNewPlan from "../AddNewPlan";
+import AddNewNote from "../AddNewNote";
+import { useRouter } from "next/router";
 
 function NoteWarpper() {
   const { addItem, onChangeState } = useAppContext();
   const [foldersList, setFoldersList] = React.useState<IFolder[]>();
+  const router = useRouter();
+  const { folderId, noteId } = router.query;
   React.useEffect(() => {
     const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
     fetch(`${baseURL}/getFolders`, {
@@ -48,9 +52,12 @@ function NoteWarpper() {
               </Stack>
             </Grid>
             <Grid item xs={9} sx={{ height: "70vh" }}>
-              <Typography variant="h6" sx={{ textAlign: "center" }}>
-                Note list
-              </Typography>
+              <Stack direction={"row"} sx={{ ml: 3 }}>
+                <Typography variant="h6" sx={{ mr: 10 }}>
+                  Note list
+                </Typography>
+                {!!folderId && <AddNewNote />}
+              </Stack>
               <Divider />
               <NoteList />
             </Grid>
