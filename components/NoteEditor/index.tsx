@@ -35,12 +35,16 @@ function NoteEditor() {
       .catch((err) => console.log(err));
   }, [noteId, folderId]);
 
+  React.useEffect(() => {
+    setRawHTML(note?.noteContent);
+  }, [note]);
+
   const debounceMemo = React.useMemo(() => {
     return debounce((rawHTML, note) => {
       if (rawHTML === note?.noteContent) {
         return;
       } else {
-        const data = { noteContent: rawHTML, noteId };
+        const data = { noteContent: rawHTML, noteId: note.noteId };
         const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
         fetch(`${baseURL}/updateNoteContent`, {
           method: "POST",

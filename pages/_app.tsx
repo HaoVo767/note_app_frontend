@@ -17,7 +17,7 @@ type AppPropsWithLayout = AppProps & {
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   React.useEffect(() => {
-    Axios.defaults.baseURL = "http://localhost:5000/";
+    Axios.defaults.baseURL = "https://note-app-backend-sandy.vercel.app/";
   }, []);
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
